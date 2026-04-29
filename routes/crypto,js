@@ -1,0 +1,30 @@
+const express = require('express');
+const router = express.Router();
+const Crypto = require('../models/Crypto');
+
+// Get All
+router.get('/', async (req, res) => {
+    const cryptos = await Crypto.find();
+    res.json(cryptos);
+});
+
+// Top Gainers (Sorted by change24h desc)
+router.get('/gainers', async (req, res) => {
+    const gainers = await Crypto.find().sort({ change24h: -1 });
+    res.json(gainers);
+});
+
+// New Listings (Sorted by createdAt desc)
+router.get('/new', async (req, res) => {
+    const news = await Crypto.find().sort({ createdAt: -1 });
+    res.json(news);
+});
+
+// Post New Crypto
+router.post('/', async (req, res) => {
+    const newCrypto = new Crypto(req.body);
+    await newCrypto.save();
+    res.status(201).json(newCrypto);
+});
+
+module.exports = router;

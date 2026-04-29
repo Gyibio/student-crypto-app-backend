@@ -7,9 +7,12 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ["https://yourname-crypto-app.netlify.app"] // Replace with your ACTUAL frontend URL
+    origin: ["https://studentcrypto-demo-app.netlify.app"] // Replace with your ACTUAL frontend URL
 }));
 app.use(express.json());
+
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/crypto', require('./routes/crypto'));
 
 // Basic Route
 app.get('/', (req, res) => {
