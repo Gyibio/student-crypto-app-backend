@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
+
 const app = express();
 
 // Middleware
@@ -27,4 +28,4 @@ mongoose.connect(process.env.MONGO_URI)
             console.log('Server is running: http://localhost:5000');
         });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err)); 

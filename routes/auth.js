@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middleware/authMiddleware');
-const bcrpyt = require('bcryptjs')
+const bcrypt = require('bcryptjs')
 
 //Regiter (POST)
 router.post('/register', async (req, res) => {
@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
 
     //Hash the password
-    const hashedPassword = await bcrpyt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, salt);
     
     //3.Save the new user with the Hashed password
     const newUser = new User({name, email, password: hashedPassword})
@@ -25,18 +25,19 @@ router.post('/register', async (req, res) => {
 router.post('/login', async(req, res) => {
     try{
     //1. find user
-    const user = await User.findOne ({emai: req.bpdy.email});
+    const user = await User.findOne({email: req.body.email});
     if (!user) return res.status(400).send('Invalid email or password');
 
     //2.compare incoming password with stored hash
-    const validPassword = await bcrpyt.compare(req.body.password, user.password)
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
     if (!validPassword) return res.status(400).send('Invalid email or password')
 
     //3.create token
     const token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET);
     res.header('Authorization', token).json({token});
     }catch (err) {
-        res.status(500).send('Server error')
+        console.log(err);
+        res.status(500).send('Server error: ' + err.messgae)
     }
 })
 

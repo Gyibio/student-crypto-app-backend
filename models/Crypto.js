@@ -5,7 +5,7 @@ const CryptoSchema =  mongoose.Schema({
         type:String,
         required: true,
     },
-    Symbol: {
+    symbol: {
         type: String,
         required: true,
     },
