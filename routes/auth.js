@@ -67,7 +67,7 @@ router.get("/profile", authMiddleware, async (req, res) => {
 
     res.json(user);
   } catch (err) {
-    console.log("JProfile Error:", err.message);
+    console.log("Profile Error:", err.message);
     res.status(500).send("Server Error");
   }
 });
