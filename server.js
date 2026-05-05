@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "https://student-crypto-demo-app.netlify.app",
+    origin: "https://student-crypto-app.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }),
