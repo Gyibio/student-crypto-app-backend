@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ["https://studentcrypto-demo-app.netlify.app"] // Replace with your ACTUAL frontend URL
+    origin: ["https://student-crypto-demo-app.netlify.app/"] // Replace with your ACTUAL frontend URL
 }));
 app.use(express.json());
 
@@ -28,4 +28,4 @@ mongoose.connect(process.env.MONGO_URI)
             console.log('Server is running: http://localhost:5000');
         });
     })
-    .catch((err) => console.log(err)); 
+    .catch((err) => console.log(err));
