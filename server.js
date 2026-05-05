@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: "https://student-crypto-demo-app.netlify.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,L
+    credentials: true
   }),
 );
 app.use(express.json());
