@@ -72,6 +72,7 @@ router.get("/profile", authMiddleware, async (req, res) => {
 
     res.json(user);
   } catch (err) {
+    console.log("JWT Error:", err.message)
     res.status(400).send("Invalid Token");
   }
 });
