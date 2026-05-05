@@ -22,25 +22,35 @@ router.post('/register', async (req, res) => {
 })
 
 //Login (POST)
-router.post('/login', async(req, res) => {
-    try{
-    //1. find user
-    const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(400).send('Invalid email or password');
+router.post('/login', async (req, res) => {
+    try {
+        // 1. Find user
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) return res.status(400).send('Invalid email or password');
 
-    //2.compare incoming password with stored hash
-    const validPassword = await bcrypt.compare(req.body.password, user.password)
-    if (!validPassword) return res.status(400).send('Invalid email or password')
+        // 2. Compare incoming password with stored hash
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if (!validPassword) return res.status(400).send('Invalid email or password');
 
-    //3.create token
-    const token = jwt.sign({ _id: user._id}, process.env.JWT_SECRET);
-    res.header('Authorization', token).json({token});
-    }catch (err) {
+        // 3. Create token
+        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+
+        // 4. Send back token AND user info (excluding password)
+        res.status(200).header('Authorization', token).json({
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
+
+    } catch (err) {
         console.log(err);
-        res.status(500).send('Server error: ' + err.messgae)
+        // Fixed a small typo: err.message instead of err.messgae
+        res.status(500).send('Server error: ' + err.message);
     }
-})
-
+});
 //Profile (Get) 
 router.get('/profile', authMiddleware, async (req, res) => {
     const user = await User.findById(req.user._id);
