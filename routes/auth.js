@@ -67,9 +67,9 @@ router.get("/profile", authMiddleware, async (req, res) => {
     const token = req.header("Authorization")?.split("")[1];
     if (!token) return res.status(401).send("No token provided");
 
-    const verified = jwt.verify(token, process.env.JWT_SECREt);
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(verified._id).select("-password");
-    
+
     res.json(user);
   } catch (err) {
     res.status(400).send("Invalid Token");
