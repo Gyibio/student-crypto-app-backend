@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: ["https://student-crypto-demo-app.netlify.app/"] // Replace with your ACTUAL frontend URL
+    origin: ["https://student-crypto-demo-app.netlify.app"] // Replace with your ACTUAL frontend URL
 }));
 app.use(express.json());
 
