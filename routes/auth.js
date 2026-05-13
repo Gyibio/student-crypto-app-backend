@@ -62,7 +62,7 @@ router.post("/login", async (req, res) => {
 //Profile (Get)
 router.get("/profile", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(verified._id).select("-password");
+    const user = await User.findById(req.user._id).select("-password");
     if (!user) return res.status(404).send("User not found");
 
     res.json(user);
